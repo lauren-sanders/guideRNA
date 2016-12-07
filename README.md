@@ -3,10 +3,12 @@ Code by Lauren Sanders
 Purpose: Design guide RNAs for selected exons. 
 
 gRNAs will be at three positions: mid-exon, 5' splice site, 3' splice site.<br />
+<br /> 
 The 2 splice sites will have three gRNAs associated with them: <br />
 1) gRNA with cutsite closest to splice site<br />
 2) gRNA with highest score near splice site<br />
 3) gRNA with next highest score near the splice site<br />
+<br /> 
 The mid-exon site will only have one gRNA, the one closest to the mid-exon point.<br />
 <br />
 Usage: <br />
@@ -23,8 +25,8 @@ b. perform the following Unix commands to download the bigBedToBed conversion to
   
   > sed '/MIT Spec. Score: -1/d' ./crispr.bed | sed '/Sequence is not unique in genome/d' | cut -f 1,2,3,6,12,14,15,16 >crispr_parsed.bed
   
-c. run this command (runtime ~ 3 hrs) to parse the crispr file into individual chromosome files: 
-    > python3 parse_crispr.py <crispr_parsed.bed
+c. run this command (runtime ~ 3 hrs) to parse the crispr file into individual chromosome files: <br /> 
+  > python3 parse_crispr.py <crispr_parsed.bed
 d. once you have the individual chromosome crispr files, you do not need to repeat this part.<br />
 
 Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)<br />
