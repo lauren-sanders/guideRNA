@@ -2,7 +2,7 @@
 ####Author: Lauren Sanders
 ####Version 1: 12/9/16
 <br /> 
-This proram uses Max Haussler's guide RNA custom track on the UCSC Genome Browser to design guide RNAs for CRISPR screens targeting exons. <br /> 
+This program uses Max Haussler's guide RNA custom track on the UCSC Genome Browser to design guide RNAs for CRISPR screens targeting exons. <br /> 
 The program produces guide RNAs targeting three positions on each exon: mid-exon, 5' splice site, 3' splice site.<br />
 <br /> 
 In order to provide flexibility regarding guide RNA quality score and guide RNA position, the 5' and 3'  splice sites will have three gRNAs associated with them: <br />
@@ -19,24 +19,29 @@ Part 1: Crispr Files (ONE-TIME USE)<br />
 a. download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
 b. perform the following Unix commands to download the bigBedToBed conversion tool, convert<br />
     the bigBed file to a Bed File, and remove all gRNAs whose sequence is not unique in the genome:<br /> 
-  > wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigBedToBed
-<br/>
-  > chmod +x bigBedToBed
-<br/>  
-  > ./bigBedToBed crispr.bb crispr.bed
-<br/>  
-  > sed '/MIT Spec. Score: -1/d' ./crispr.bed | sed '/Sequence is not unique in genome/d' | cut -f 1,2,3,6,12,14,15,16 >crispr_parsed.bed
-<br/>  
-c. run this command (runtime ~ 3 hrs) to parse the crispr file into individual chromosome files: <br /> 
-  > python3 parse_crispr.py <crispr_parsed.bed
+-
+> wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigBedToBed
+-  
+> chmod +x bigBedToBed
+-
+> ./bigBedToBed crispr.bb crispr.bed
+-
+> sed '/MIT Spec. Score: -1/d' ./crispr.bed | sed '/Sequence is not unique in genome/d' | cut -f 1,2,3,6,12,14,15,16 >crispr_parsed.bed
+
+c. run this command (runtime ~ 3 hrs) to parse the crispr file into individual chromosome files: 
+
+> python3 parse_crispr.py <crispr_parsed.bed
+
 d. once you have the individual chromosome crispr files, you do not need to repeat this part.<br />
 
-Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)<br />
-a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br />
+Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
+<br />
+a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.
+<br />
 b. Remove the header using this command: 
-  > sed -i '1d' infile
-c. use this command the run the gRNA script: <br />
-  > python3 guideRNAselection.py -f infile
+> sed -i '1d' infile
+c. use this command the run the gRNA script:
+> python3 guideRNAselection.py -f infile
 
 Output:  3 files <br />
 1) infile_5PrimeGuideRNAs.csv <br />
