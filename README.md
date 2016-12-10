@@ -1,13 +1,14 @@
-Code by Lauren Sanders
-
-Purpose: Design guide RNAs for selected exons. 
-
-gRNAs will be at three positions: mid-exon, 5' splice site, 3' splice site.<br />
+####Purpose: Design guide RNAs for selected exons.<br />
+####Author: Lauren Sanders
+####Version 1: 12/9/16
 <br /> 
-The 2 splice sites will have three gRNAs associated with them: <br />
-1) gRNA with cutsite closest to splice site<br />
-2) gRNA with highest score near splice site<br />
-3) gRNA with next highest score near the splice site<br />
+This proram uses Max Haussler's guide RNA custom track on the UCSC Genome Browser to design guide RNAs for CRISPR screens targeting exons. <br /> 
+The program produces guide RNAs targeting three positions on each exon: mid-exon, 5' splice site, 3' splice site.<br />
+<br /> 
+In order to provide flexibility regarding guide RNA quality score and guide RNA position, the 5' and 3'  splice sites will have three gRNAs associated with them: <br />
+  - gRNA with cutsite closest to splice site<br />
+  - gRNA with highest score within 200 bp of splice site<br />
+  - gRNA with next highest score within 200 bp of splice site<br />
 <br /> 
 The mid-exon site will only have one gRNA, the one closest to the mid-exon point.<br />
 <br />
