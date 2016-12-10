@@ -1,4 +1,4 @@
-####Purpose: Design guide RNAs for selected exons.<br />
+###Purpose: Design guide RNAs for selected exons.<br />
 ####Author: Lauren Sanders
 ####Version 1: 12/9/16
 <br /> 
@@ -13,9 +13,9 @@ In order to provide flexibility regarding guide RNA quality score and guide RNA 
 <br /> 
 The mid-exon site will only have one gRNA, the one closest to the mid-exon point.<br />
 <br />
-Usage: <br />
-<br />
+###Usage: <br />
 ####Part 1: Crispr Files (ONE-TIME USE)<br />
+<br />
   a. download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
   b. perform the following Unix commands to download the bigBedToBed conversion tool, convert the bigBed file to a Bed File, and remove all gRNAs whose sequence is not unique in the genome:<br /> 
 
@@ -35,7 +35,8 @@ Usage: <br />
 
 > python3 parse_crispr.py <crispr_parsed.bed
 
-####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
+####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)<br />
+<br />
 
   a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br/>
   
@@ -47,9 +48,9 @@ c. use this command to run the gRNA design script (runtime 1-3 hours depending o
 > python3 guideRNAselection.py -f infile
 
 ####Output:  3 files <br />
-  1) infile_5PrimeGuideRNAs.csv <br />
-  2) infile_3PrimeGuideRNAs.csv<br />
-  3) infile_MidExonGuideRNAs.csv<br />
+  1. infile_5PrimeGuideRNAs.csv <br />
+  2. infile_3PrimeGuideRNAs.csv<br />
+  3. infile_MidExonGuideRNAs.csv<br />
 
 The 5' and 3' files each have 12 columns as follows:<br />
 
