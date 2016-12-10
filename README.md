@@ -9,6 +9,7 @@ In order to provide flexibility regarding guide RNA quality score and guide RNA 
   - gRNA with cutsite closest to splice site<br />
   - gRNA with highest score within 200 bp of splice site<br />
   - gRNA with next highest score within 200 bp of splice site<br />
+
 <br /> 
 The mid-exon site will only have one gRNA, the one closest to the mid-exon point.<br />
 <br />
