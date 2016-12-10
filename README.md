@@ -9,19 +9,21 @@ In order to provide flexibility regarding guide RNA quality score and guide RNA 
   - gRNA with cutsite closest to splice site<br />
   - gRNA with highest score within 200 bp of splice site<br />
   - gRNA with next highest score within 200 bp of splice site<br />
-<br /> 
+
 The mid-exon site will only have one gRNA, the one closest to the mid-exon point.<br />
 <br />
-####INPUT
-The program is designed to take as input a file containing only the Associated_Exon_Coordinates column of a JuncBase file, which is formatted like this: 1:1000-1100 where 1=chromosome, 1000=exonStart, 1100=exonEnd.<br />
-####NOTE
-If the JuncBase exon coordinates are different from the exon coordinates in the Genome Browser, the program may not be able to design gRNAs for that exon. In this case, a list of exons for which gRNAs were not designed will be output at the end of the program.
-
-###USAGE: <br />
-####Part 1: Crispr Files (ONE-TIME USE)<br />
+###INPUT<br />
+The program is designed to take as input a file containing only the Associated_Exon_Coordinates column of a JuncBase file, which is formatted like this: 1:1000-1100 (where 1=chromosome, 1000=exonStart, 1100=exonEnd).<br />
+Additionally, the program requires files containing CRISPR guide RNA sequences, downloaded from the Genome Browser. Part 1 of USAGE has instructions for getting these files.<br />
 <br />
-  a. download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
-  b. perform the following Unix commands to download the bigBedToBed conversion tool, convert the bigBed file to a Bed File, and remove all gRNAs whose sequence is not unique in the genome:<br /> 
+###NOTE<br />
+If the JuncBase exon coordinates are different from the exon coordinates in the Genome Browser, the program may not be able to design gRNAs for that exon. In this case, a list of exons for which gRNAs were not designed will be output at the end of the program.<br />
+<br />
+###USAGE: <br />
+####Part 1: Crispr Files (ONE-TIME USE)
+  a. Download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
+<br />
+  b. In order to download the bigBedToBed conversion tool, convert the bigBed file to a Bed File, and remove all gRNAs whose sequence is not unique in the genome, perform the following Unix commands:<br /> 
 
 1.
 > wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigBedToBed
@@ -39,6 +41,7 @@ If the JuncBase exon coordinates are different from the exon coordinates in the 
 
 > python3 parse_crispr.py <crispr_parsed.bed
 
+<br />
 ####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)<br />
 
 a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br/>
@@ -47,10 +50,10 @@ b. Remove the header using this command:
   
 > sed -i '1d' infile
 
-c. use this command to run the gRNA design script (runtime 1-3 hours depending on number of exons. Running with nohup recommended):
+c. Use this command to run the gRNA design script (runtime 1-3 hours depending on number of exons. Running with nohup recommended):
 > python3 guideRNAselection.py -f infile
 
-####OUTPUT:  (3 files) <br />
+###OUTPUT:  (3 files) <br />
   1. infile_5PrimeGuideRNAs.csv <br />
   2. infile_3PrimeGuideRNAs.csv<br />
   3. infile_MidExonGuideRNAs.csv<br />
