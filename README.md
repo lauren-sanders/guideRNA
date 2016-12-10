@@ -4,17 +4,20 @@
 <br /> 
 This program uses Max Haussler's guide RNA custom track on the UCSC Genome Browser to design guide RNAs for CRISPR screens targeting exons. <br /> 
 The program produces guide RNAs targeting three positions on each exon: mid-exon, 5' splice site, 3' splice site.<br />
-The program is designed to take as input a file containing only the Associated_Exon_Coordinates column of a JuncBase file, which is formatted like this: 1:1000-1100 where 1=chromosome, 1000=exonStart, 1100=exonEnd.<br />
 <br /> 
 In order to provide flexibility regarding guide RNA quality score and guide RNA position, the 5' and 3'  splice sites will have three gRNAs associated with them: <br />
   - gRNA with cutsite closest to splice site<br />
   - gRNA with highest score within 200 bp of splice site<br />
   - gRNA with next highest score within 200 bp of splice site<br />
-
 <br /> 
 The mid-exon site will only have one gRNA, the one closest to the mid-exon point.<br />
 <br />
-###Usage: <br />
+####INPUT
+The program is designed to take as input a file containing only the Associated_Exon_Coordinates column of a JuncBase file, which is formatted like this: 1:1000-1100 where 1=chromosome, 1000=exonStart, 1100=exonEnd.<br />
+####NOTE
+If the JuncBase exon coordinates are different from the exon coordinates in the Genome Browser, the program may not be able to design gRNAs for that exon. In this case, a list of exons for which gRNAs were not designed will be output at the end of the program.
+
+###USAGE: <br />
 ####Part 1: Crispr Files (ONE-TIME USE)<br />
 <br />
   a. download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
@@ -47,7 +50,7 @@ b. Remove the header using this command:
 c. use this command to run the gRNA design script (runtime 1-3 hours depending on number of exons. Running with nohup recommended):
 > python3 guideRNAselection.py -f infile
 
-####Output:  3 files <br />
+####OUTPUT:  (3 files) <br />
   1. infile_5PrimeGuideRNAs.csv <br />
   2. infile_3PrimeGuideRNAs.csv<br />
   3. infile_MidExonGuideRNAs.csv<br />
