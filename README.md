@@ -15,7 +15,7 @@ The mid-exon site will only have one gRNA, the one closest to the mid-exon point
 <br />
 Usage: <br />
 <br />
-Part 1: Crispr Files (ONE-TIME USE)<br />
+####Part 1: Crispr Files (ONE-TIME USE)<br />
   a. download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
   b. perform the following Unix commands to download the bigBedToBed conversion tool, convert the bigBed file to a Bed File, and remove all gRNAs whose sequence is not unique in the genome:<br /> 
 
@@ -35,7 +35,7 @@ Part 1: Crispr Files (ONE-TIME USE)<br />
 
 > python3 parse_crispr.py <crispr_parsed.bed
 
-Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
+####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
 
   a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br/>
   
@@ -46,10 +46,10 @@ Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
 c. use this command the run the gRNA script:
 > python3 guideRNAselection.py -f infile
 
-Output:  3 files <br />
-1) infile_5PrimeGuideRNAs.csv <br />
-2) infile_3PrimeGuideRNAs.csv<br />
-3) infile_MidExonGuideRNAs.csv<br />
+####Output:  3 files <br />
+  1) infile_5PrimeGuideRNAs.csv <br />
+  2) infile_3PrimeGuideRNAs.csv<br />
+  3) infile_MidExonGuideRNAs.csv<br />
 
 The 5' and 3' files each have 12 columns as follows:<br />
 
