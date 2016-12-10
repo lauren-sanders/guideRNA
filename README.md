@@ -43,7 +43,7 @@ Usage: <br />
   
 > sed -i '1d' infile
 
-c. use this command the run the gRNA script:
+c. use this command to run the gRNA design script (runtime 1-3 hours depending on number of exons. Running with nohup recommended):
 > python3 guideRNAselection.py -f infile
 
 ####Output:  3 files <br />
