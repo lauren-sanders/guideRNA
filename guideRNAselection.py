@@ -123,9 +123,6 @@ class GuideRna :
             if exon.startswith(self.chr):    
                 exons_of_interest.append(exon)
         
-        print('exons_of_interest')
-        print(len(exons_of_interest))
-        
         guidesInFivePrimeRange = []
         guidesInThreePrimeRange = []
         guidesInMidRange = []
@@ -256,9 +253,7 @@ class GuideRna :
                     
                 if len(guideRangeList) == 0 : 
                     guides_left = False
-                    print('this loop works')
                     break
-            print(len(nearestGuides))
             
             return nearestGuides
             
@@ -290,30 +285,34 @@ class GuideRna :
         
         guides_to_remove = []
         nearestGuides = []
-        while True:
-            for guide in guideRangeList:
-                try:
-                    if guide[2] == guideRangeList[guideRangeList.index(guide)-1][2] \
-                                or guideRangeList[guideRangeList.index(guide)+1][2] == guide[2]:
-                                
-                        if distance(guideRangeList[guideRangeList.index(guide)-1]) < distance(guide) \
-                                or distance(guideRangeList[guideRangeList.index(guide)+1]) < distance(guide):
-                                
-                            guides_to_remove.append(guide)
-                            
-                except IndexError:
-                    pass
-       
-            if guides_to_remove == []:
-                break
-            elif not guides_to_remove == []:
-                nearestGuides = [guide for guide in guideRangeList if not guide in guides_to_remove]
-                guideRangeList = nearestGuides
-                guides_to_remove = []
-                
-                
-        return nearestGuides
+        guides_left = True 
+        while guides_left == True:
         
+            same_exon = []
+            distances = []
+            
+            try:
+                same_exon.append(guideRangeList[0])
+            except IndexError: 
+                pass
+            
+            for j in range(1,len(guideRangeList)): 
+                if guideRangeList[0][2] == guideRangeList[j][2] : 
+                    same_exon.append(guideRangeList[j])
+                    
+            for guide in same_exon: 
+                guideRangeList.remove(guide)
+                distances.append(distance(guide))
+            try: 
+                nearestGuides.append(same_exon[distances.index(max(distances))])
+            except ValueError:
+                pass
+                
+            if len(guideRangeList) == 0 : 
+                guides_left = False
+                break
+        
+        return nearestGuides        
 
 def main(cL=None):
     '''
@@ -339,15 +338,14 @@ def main(cL=None):
     allMidExon = []
     
     for chrom in chromList:
-        print(chrom)
+        print("Finished guide RNAs for", chrom)
         
         newGuides = GuideRna(allExons, chrom)
     
         guidesInFivePrimeRange, guidesInThreePrimeRange, guidesInMidRange = newGuides.rangeLists()
     
         nearestFivePrime, greenFivePrime, yellowFivePrime, nearestThreePrime, greenThreePrime, yellowThreePrime = newGuides.spliceSiteGuides(guidesInFivePrimeRange, guidesInThreePrimeRange)
-        print(nearestFivePrime[:5])
-    
+        
         midExonGuides = newGuides.midExonGuides(guidesInMidRange)
         
         # Combine each indiv chromosome list into a master list for each category
@@ -396,7 +394,7 @@ def main(cL=None):
                 if written == False :
                     item = ','.join(map(str, item[1:]))
                     item = item.split(',')[:3] + gap3 + item.split(',')[3:]
-                    outfile.writelines(item + '\n')
+                    outfile.writelines(','.join(map(str, item)) + '\n')
             outfile.close()
         infile.close()
                         
@@ -411,10 +409,10 @@ def main(cL=None):
                         outfile.writelines(newline + '\n')
                         written = True
                         break
-            if written == False : 
-                item = ','.join(map(str, item[1:]))
-                item = item.split(',')[:3] + gap6 + item.split(',')[3:]
-                outfile.writelines(item + '\n')
+                if written == False : 
+                    item = ','.join(map(str, item[1:]))
+                    item = item.split(',')[:3] + gap6 + item.split(',')[3:]
+                    outfile.writelines(','.join(map(str, item)) + '\n')
             outfile.close()
         infile.close()
     
@@ -432,7 +430,7 @@ def main(cL=None):
         f.close()
     
     with open('allnearestThreePrime.csv', 'r') as infile:
-        with open('nearestAndgreenThreePrime.csv', 'w') as outfile:
+        with open('nearestAndgreenThreePrime.csv', 'a') as outfile:
             for item in allgreenThreePrime:
                 written = False
                 for line in infile:
@@ -445,7 +443,7 @@ def main(cL=None):
                 if written == False :
                     item = ','.join(map(str, item[1:]))
                     item = item.split(',')[:3] + gap3 + item.split(',')[3:]
-                    outfile.writelines(item + '\n')
+                    outfile.writelines(','.join(map(str, item)) + '\n')
             outfile.close()
         infile.close()
                         
@@ -463,7 +461,7 @@ def main(cL=None):
                 if written == False : 
                     item = ','.join(map(str, item[1:]))
                     item = item.split(',')[:3] + gap6 + item.split(',')[3:]
-                    outfile.writelines(item + '\n')
+                    outfile.writelines(','.join(map(str, item)) + '\n')
             outfile.close()
         infile.close()
     
@@ -480,6 +478,66 @@ def main(cL=None):
             item = ','.join(map(str, item[1:]))
             m.writelines(item + '\n')
         m.close()
+        
+        
+    print("Finished designing guide RNAs for the given exons.")
+    print("5' splice site, 3' splice site, and mid-exon gRNAs can be found in the following files:")
+    print(cL.args.filename.split('.')[0] + '_5PrimeGuideRNAs.csv')
+    print(cL.args.filename.split('.')[0] + '_3PrimeGuideRNAs.csv')
+    print(cL.args.filename.split('.')[0] + '_MidExonGuideRNAs.csv')
+    #######################
+    # Write Skipped Exons #
+    #######################
+    
+    with open(cL.args.filename, 'r') as f:
+        exons = [part for part in [entry.strip().replace(':','-') for entry in f.readlines()[1:]]]
+        exonstart = [part for part in [entry.split('-')[1] for entry in exons]]
+    
+    # Exons with no 5' guides
+    missed_exons_five = []
+    with open(cL.args.filename.split('.')[0] + '_5PrimeGuideRNAs.csv', 'r') as five:
+        guides = [part for part in [entry.strip().split(',')[1] for entry in five.readlines()[1:]]]
+        for exon in exonstart:
+            if exon not in guides:
+                missed_exons_five.append(exon)
+                
+    print("No 5' splice site guide RNAs were found for the following exons:")
+    for miss in missed_exons_five:
+        for exon in exons:
+            if miss in exon:
+                print(exon)
+                
+    # Exons with no 3' guides
+    missed_exons_three = []
+    with open (cL.args.filename.split('.')[0] + '_3PrimeGuideRNAs.csv', 'r') as three:
+        guides = [part for part in [entry.strip().split(',')[1] for entry in three.readlines()[1:]]]
+        for exon in exonstart:
+            if exon not in guides:
+                missed_exons_three.append(exon)
+                
+    print("No 3' splice site guide RNAs were found for the following exons:")
+    for miss in missed_exons_three:
+        for exon in exons:
+            if miss in exon:
+                print(exon)
+                
+    # Exons with no mid-exon guides
+    missed_exons_mid = []
+    with open (cL.args.filename.split('.')[0] + '_MidExonGuideRNAs.csv', 'r') as m:
+        guides = [part for part in [entry.strip().split(',')[1] for entry in m.readlines()[1:]]]
+        for exon in exonstart:
+            if exon not in guides:
+                missed_exons_mid.append(exon)
+                
+    print("No mid-exon guide RNAs were found for the following exons:")
+    for miss in missed_exons_mid:
+        for exon in exons:
+            if miss in exon:
+                print(exon)
+    f.close()
+    five.close()
+    three.close()
+    m.close()
     
 if __name__ == "__main__":
     main();
