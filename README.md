@@ -4,6 +4,7 @@
 <br /> 
 This program uses Max Haussler's guide RNA custom track on the UCSC Genome Browser to design guide RNAs for CRISPR screens targeting exons. <br /> 
 The program produces guide RNAs targeting three positions on each exon: mid-exon, 5' splice site, 3' splice site.<br />
+The program is designed to take as input a file containing only the Associated_Exon_Coordinates column of a JuncBase file, which is formatted like this: 1:1000-1100 where 1=chromosome, 1000=exonStart, 1100=exonEnd.<br />
 <br /> 
 In order to provide flexibility regarding guide RNA quality score and guide RNA position, the 5' and 3'  splice sites will have three gRNAs associated with them: <br />
   - gRNA with cutsite closest to splice site<br />
@@ -35,12 +36,11 @@ The mid-exon site will only have one gRNA, the one closest to the mid-exon point
 
 > python3 parse_crispr.py <crispr_parsed.bed
 
-####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
-<br />
+####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)<br />
 
-  a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br/>
+a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br/>
   
-  b. Remove the header using this command:
+b. Remove the header using this command:
   
 > sed -i '1d' infile
 
