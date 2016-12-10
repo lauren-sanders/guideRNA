@@ -19,7 +19,7 @@ Additionally, the program requires files containing CRISPR guide RNA sequences, 
 ###NOTE<br />
 If the JuncBase exon coordinates are different from the exon coordinates in the Genome Browser, the program may not be able to design gRNAs for that exon. In this case, a list of exons for which gRNAs were not designed will be output at the end of the program.<br />
 <br />
-###USAGE: <br />
+###USAGE <br />
 ####Part 1: Crispr Files (ONE-TIME USE)
   a. Download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
 <br />
@@ -53,7 +53,7 @@ b. Remove the header using this command:
 c. Use this command to run the gRNA design script (runtime 1-3 hours depending on number of exons. Running with nohup recommended):
 > python3 guideRNAselection.py -f infile
 
-###OUTPUT:  (3 files) <br />
+###OUTPUT  (3 files) <br />
   1. infile_5PrimeGuideRNAs.csv <br />
   2. infile_3PrimeGuideRNAs.csv<br />
   3. infile_MidExonGuideRNAs.csv<br />
