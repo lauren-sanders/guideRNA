@@ -19,13 +19,13 @@ Part 1: Crispr Files (ONE-TIME USE)<br />
 a. download the bigBed file crispr.bb from http://hgdownload.cse.ucsc.edu/gbdb/hg19/crispr/<br />
 b. perform the following Unix commands to download the bigBedToBed conversion tool, convert<br />
     the bigBed file to a Bed File, and remove all gRNAs whose sequence is not unique in the genome:<br /> 
--
+
 > wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigBedToBed
--  
+  
 > chmod +x bigBedToBed
--
+
 > ./bigBedToBed crispr.bb crispr.bed
--
+
 > sed '/MIT Spec. Score: -1/d' ./crispr.bed | sed '/Sequence is not unique in genome/d' | cut -f 1,2,3,6,12,14,15,16 >crispr_parsed.bed
 
 c. run this command (runtime ~ 3 hrs) to parse the crispr file into individual chromosome files: 
