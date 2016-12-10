@@ -35,7 +35,7 @@ The mid-exon site will only have one gRNA, the one closest to the mid-exon point
 
 > python3 parse_crispr.py <crispr_parsed.bed
 
-####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)<br />
+####Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
 <br />
 
   a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br/>
