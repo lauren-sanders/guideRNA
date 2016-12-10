@@ -35,14 +35,15 @@ Part 1: Crispr Files (ONE-TIME USE)<br />
 
 > python3 parse_crispr.py <crispr_parsed.bed
 
-  d. once you have the individual chromosome crispr files, you do not need to repeat this part.<br />
-
 Part 2: gRNA Design (Every time you need to design gRNAs for a new exon set)
-  a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.
-  b. Remove the header using this command: 
+
+  a. Retrieve only the Associated_Exon_Coordinates column from your JuncBase file, and write it into a new file.<br/>
+  
+  b. Remove the header using this command:
+  
 > sed -i '1d' infile
 
-  c. use this command the run the gRNA script:
+c. use this command the run the gRNA script:
 > python3 guideRNAselection.py -f infile
 
 Output:  3 files <br />
