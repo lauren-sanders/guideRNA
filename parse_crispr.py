@@ -54,7 +54,7 @@ class CrisprReader :
                         
         for line in self.infile:
             line = line.replace('\t',',').strip()
-            with open(line.split(',')[0] + '_' + 'crispr.txt', 'a') as h:
+            with open(line.split(',')[0] + ',' + 'crispr.txt', 'a') as h:
                 h.write(line+'\n')
                 
                 
